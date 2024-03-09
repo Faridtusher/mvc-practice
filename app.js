@@ -1,29 +1,37 @@
+// dependencies
 require('dotenv').config();
 const express = require('express')
 const app = express();
 const port = process.env.port || 3001
 const hostname = '127.0.0.1'
-const userRouter = require('./router/user.router')
+// finish all dependencies
 
 
-app.use(userRouter)
-
-
-
+// get all of the routers
+const usersRoute = require('./routes/usersRouter')
+const productsRoute = require('./routes/productsRoute')
+const contactRoute = require('./routes/contactRoute')
+// finish get all of the routers
 
 
 // create the home page
-app.get('/', (req, res)=>{
+app.get('/', (req, res) =>{
    res.send('<h2>Home page</h2>')
 })
 
 
-// create the home page
-app.use( (req, res)=>{
-   res.status(404).json({
-      message:'Not found page'
-   })
+// call the imported routes
+app.use(usersRoute)
+app.use(productsRoute)
+app.use(contactRoute)
+// call the imported routes
+
+
+// not found page
+app.use((req, res) =>{
+   res.send('<h2>404 !!! Not found</h2>')
 })
+
 
 // export
 module.exports = {
